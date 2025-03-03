@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\User;
 //Creación de los Models en app/Models 
 /**
@@ -29,23 +30,23 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-        Productos::factory(10)->create();
+        Product::factory(10)->create();
 
         // Crear ventas (por ejemplo, 5 ventas)
-        $ventas = Venta::factory(5)->create();
+        $bills = Bill::factory(5)->create();
 
         // Relacionar productos a las ventas (suponiendo que la relación es muchos a muchos)
-        foreach ($ventas as $venta) {
+        foreach ($bills as $bill) {
             // Crear un número aleatorio de productos vendidos para cada venta
-            $productos = Producto::inRandomOrder()->take(rand(1, 3))->get();
+            $products = Product::inRandomOrder()->take(rand(1, 3))->get();
 
             // Relacionar los productos con la venta (esto creará registros en la tabla pivot)
-            foreach ($productos as $producto) {
+            foreach ($products as $product) {
                 // Creando la relación entre la venta y el producto en la tabla pivot 'venta_producto'
-                VentaProducto::create([
-                    'venta_id' => $venta->id,
-                    'producto_id' => $producto->id,
-                    'cantidad' => rand(1, 5), // Puedes ajustar la cantidad de productos vendidos
+                BillProduct::create([
+                    'bill_id' => $bill->id,
+                    'product_id' => $product->id,
+                    'quantity' => rand(1, 5), // Puedes ajustar la cantidad de productos vendidos
                 ]);
             }
         }

@@ -10,10 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('bill', function (Blueprint $table) {
             $table->id(); // Crea una columna 'id' como BIGINT UNSIGNED y la define como PRIMARY KEY
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Clave foránea que referencia a la tabla 'usuarios'
-            $table->timestamp('fecha')->useCurrent(); // Fecha y hora de la venta
+            $table->timestamp('date')->useCurrent(); // Fecha y hora de la venta
             $table->timestamps(); // Registra las fechas de creación y actualización
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('ventas'); // Elimina la tabla 'ventas'
+        Schema::dropIfExists('bill'); // Elimina la tabla 'ventas'
     }
 };
