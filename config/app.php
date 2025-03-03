@@ -18,7 +18,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | Application Environment
-    |--------------------------------------------------------------------------
+    |--------------------------------l7hyib------------------------------------------
     |
     | This value determines the "environment" your application is currently
     | running in. This may determine how you prefer to configure various
