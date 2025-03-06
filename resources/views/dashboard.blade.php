@@ -14,9 +14,12 @@
                     Aquí puedes gestionar tu perfil y usuarios.
                 </p>
 
-                <a href="{{ route('users.create') }}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                    Crear Nuevo Usuario
-                </a>
+                <div class="mt-4">
+                        <a href="{{ route('productos.index') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+                            Ver Productos
+                        </a>
+                    </div>
+
             </div>
         </div>
     </div>

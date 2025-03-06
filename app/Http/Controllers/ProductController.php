@@ -7,21 +7,48 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // Obtener todos los productos (GET)
+    // Listar todos los productos (GET)
     public function index()
     {
         $productos = Product::all();
         return view('productos.index', compact('productos'));
     }
 
-    // Mostrar un producto concreto (GET)
-    public function show(Product $producto)
+    // Mostrar formulario de creación (GET)
+    public function create()
     {
-        return view('productos.show', compact('producto'));
+        return view('productos.create');
     }
 
-    // Crear un nuevo producto (POST)
+    // Guardar un nuevo producto (POST)
     public function store(Request $request)
+    {
+        // Asegurar que los campos requeridos no estén vacíos
+        $request->validate([
+            'modelo' => 'required|string|max:255',
+            'marca' => 'required|string|max:255',
+            'año' => 'required|integer',
+            'stock' => 'required|integer|min:0',
+        ]);
+    
+        // Crear el producto con los datos validados
+        Product::create([
+            'modelo' => $request->modelo,
+            'marca' => $request->marca,
+            'año' => $request->año,
+            'stock' => $request->stock,
+        ]);
+    
+        return redirect()->route('productos.index')->with('success', 'Producto creado correctamente.');
+    }    
+    // Mostrar formulario de edición (GET)
+    public function edit(Product $producto)
+    {
+        return view('productos.edit', compact('producto'));
+    }
+
+    // Actualizar un producto (PUT/PATCH)
+    public function update(Request $request, Product $producto)
     {
         $request->validate([
             'modelo' => 'required|string|max:255',
@@ -30,34 +57,9 @@ class ProductController extends Controller
             'stock' => 'required|integer|min:0',
         ]);
 
-        Product::create($request->all());
-
-        return redirect()->route('productos.index')->with('success', 'Producto creado correctamente.');
-    }
-
-    // Modificar un producto (PUT)
-    public function update(Request $request, Product $producto)
-    {
-        $request->validate([
-            'modelo' => 'sometimes|string|max:255',
-            'marca' => 'sometimes|string|max:255',
-            'año' => 'sometimes|integer',
-            'stock' => 'sometimes|integer|min:0',
-        ]);
-
         $producto->update($request->all());
 
         return redirect()->route('productos.index')->with('success', 'Producto actualizado.');
-    }
-
-    // Actualizar solo el stock de un producto (PUT)
-    public function updateStock(Request $request, Product $producto)
-    {
-        $request->validate(['stock' => 'required|integer|min:0']);
-
-        $producto->update(['stock' => $request->stock]);
-
-        return redirect()->route('productos.index')->with('success', 'Stock actualizado.');
     }
 
     // Eliminar un producto (DELETE)

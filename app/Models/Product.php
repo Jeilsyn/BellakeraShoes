@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    protected $table = 'productos'; // 👈 Especificar el nombre correcto de la tabla
+
+    public $timestamps = false; // Desactivamos timestamps porque no están en la tabla
 
     /**
      * The attributes that are mass assignable.
@@ -15,8 +18,9 @@ class Product extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'brand',
+        'modelo',
+        'marca',
+        'año',
         'stock',
     ];
 }
