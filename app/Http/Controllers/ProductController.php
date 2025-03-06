@@ -51,7 +51,7 @@ class ProductController extends Controller
     }
 
     // Actualizar solo el stock de un producto (PUT)
-    public function updateStock(Request $request, Producto $producto)
+    public function updateStock(Request $request, Product $producto)
     {
         $request->validate(['stock' => 'required|integer|min:0']);
 
@@ -61,7 +61,7 @@ class ProductController extends Controller
     }
 
     // Eliminar un producto (DELETE)
-    public function destroy(Producto $producto)
+    public function destroy(Product $producto)
     {
         $producto->delete();
         return redirect()->route('productos.index')->with('success', 'Producto eliminado.');
