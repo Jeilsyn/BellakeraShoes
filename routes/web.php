@@ -22,7 +22,7 @@ require __DIR__.'/auth.php';
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\VentaController;
+use App\Http\Controllers\BillController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,15 +47,19 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('productos', ProductController::class);
-    
+
     // Actualizar stock de un producto específico
-    Route::put('/productos/{producto}/stock', [ProductController::class, 'updateStock'])->name('productos.updateStock');
-    
-    // Registrar una nueva venta
-    Route::post('/ventas', [VentaController::class, 'store'])->name('ventas.store');
+    Route::patch('/productos/{producto}/stock', [ProductController::class, 'updateStock'])->name('productos.updateStock');
+
+    Route::resource('bills', BillController::class)->only(['index', 'create', 'store']);
+    Route::get('/productos/search', [ProductController::class, 'search'])->name('productos.search');
+
+    Route::get('/productos/{producto}', [ProductController::class, 'show'])->name('productos.show');
+
+
 });
 
 // Incluir las rutas de autenticación generadas por Laravel Breeze
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 

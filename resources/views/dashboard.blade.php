@@ -15,10 +15,15 @@
                 </p>
 
                 <div class="mt-4">
-                        <a href="{{ route('productos.index') }}" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
-                            Ver Productos
-                        </a>
-                    </div>
+                    <a href="{{ route('productos.index') }}"
+                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+                        Ver Productos
+                    </a>
+                    <a href="{{ route('bills.index') }}" class="bg-blue-500 text-white p-2 rounded">
+                        Ver Ventas
+                    </a>
+
+                </div>
 
             </div>
         </div>

@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $table = 'productos'; // 👈 Especificar el nombre correcto de la tabla
+    protected $table = 'productos'; 
 
-    public $timestamps = false; // Desactivamos timestamps porque no están en la tabla
+    public $timestamps = false; // Desactivamos timestamps porque no están en la tabla por un error que nos dio con las fechas
 
     /**
      * The attributes that are mass assignable.

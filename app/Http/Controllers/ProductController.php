@@ -69,18 +69,17 @@ class ProductController extends Controller
         return redirect()->route('productos.index')->with('success', 'Producto eliminado.');
     }
     // Actualizar solo el stock de un producto (PATCH)
-    public function actualizarStock(Request $request, Product $producto)
+    public function updateStock(Request $request, Product $producto)
     {
         $request->validate([
             'stock' => 'required|integer|min:0',
         ]);
-
+    
         $producto->update(['stock' => $request->stock]);
-
-        return response()->json(['message' => 'Stock actualizado correctamente', 'producto' => $producto]);
+    
+        return redirect()->route('productos.index')->with('success', 'Stock actualizado correctamente.');
     }
-
-    // Obtener todos los productos en JSON (API)
+        // Obtener todos los productos en JSON (API)
     public function getAllProducts()
     {
         return response()->json(Product::all());
@@ -91,6 +90,11 @@ class ProductController extends Controller
     {
         return response()->json($producto);
     }
+
+public function show(Product $producto)
+{
+    return view('productos.show', compact('producto'));
+}
 
 
 }
