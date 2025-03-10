@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout> 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             Lista de Productos
@@ -25,6 +25,7 @@
                                 <th>Marca</th>
                                 <th>Año</th>
                                 <th>Stock</th>
+                                <th>Acciones</th> <!-- Nueva columna -->
                             </tr>
                         </thead>
                         <tbody>
@@ -34,15 +35,35 @@
                                     <td>{{ $producto->modelo }}</td>
                                     <td>{{ $producto->marca }}</td>
                                     <td>{{ $producto->año }}</td>
-                                    <td>{{ $producto->stock }}</td>
+                                    <td>
+                                        <!-- Formulario para actualizar solo el stock -->
+                                        <form action="{{ route('productos.updateStock', $producto->id) }}" method="POST">
+                                            @csrf
+                                            @method('PATCH')
+                                            <input type="number" name="stock" value="{{ $producto->stock }}" min="0">
+                                            <button type="submit" class="btn btn-sm btn-warning">Actualizar Stock</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <!-- Botón Editar -->
+                                        <a href="{{ route('productos.edit', $producto->id) }}" class="btn btn-sm btn-primary">Editar</a>
+
+                                        <!-- Formulario de eliminación con confirmación -->
+                                        <form action="{{ route('productos.destroy', $producto->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+
+                    <!-- Botón para crear nuevo producto -->
+                    <a href="{{ route('productos.create') }}" class="btn btn-primary mt-4">Nuevo Producto</a>
                 </div>
             </div>
         </div>
-        <a href="{{ route('productos.create') }}" class="btn btn-primary">Nuevo Producto</a>
-
     </div>
 </x-app-layout>

@@ -30,7 +30,7 @@ class ProductController extends Controller
             'año' => 'required|integer',
             'stock' => 'required|integer|min:0',
         ]);
-    
+
         // Crear el producto con los datos validados
         Product::create([
             'modelo' => $request->modelo,
@@ -38,9 +38,9 @@ class ProductController extends Controller
             'año' => $request->año,
             'stock' => $request->stock,
         ]);
-    
+
         return redirect()->route('productos.index')->with('success', 'Producto creado correctamente.');
-    }    
+    }
     // Mostrar formulario de edición (GET)
     public function edit(Product $producto)
     {
@@ -68,4 +68,29 @@ class ProductController extends Controller
         $producto->delete();
         return redirect()->route('productos.index')->with('success', 'Producto eliminado.');
     }
+    // Actualizar solo el stock de un producto (PATCH)
+    public function actualizarStock(Request $request, Product $producto)
+    {
+        $request->validate([
+            'stock' => 'required|integer|min:0',
+        ]);
+
+        $producto->update(['stock' => $request->stock]);
+
+        return response()->json(['message' => 'Stock actualizado correctamente', 'producto' => $producto]);
+    }
+
+    // Obtener todos los productos en JSON (API)
+    public function getAllProducts()
+    {
+        return response()->json(Product::all());
+    }
+
+    // Obtener un producto específico en JSON (API)
+    public function getProduct(Product $producto)
+    {
+        return response()->json($producto);
+    }
+
+
 }
